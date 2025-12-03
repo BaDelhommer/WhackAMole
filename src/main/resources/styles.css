@@ -26,6 +26,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-scale-y: 0.95;
 }
 
+.button:hover {
+    -fx-background-color: #ffffaa;
+    -fx-cursor: hand;
+}
+
 #scoreLabel {    
     -fx-font-size: 20px;
     -fx-text-fill: yellow;
