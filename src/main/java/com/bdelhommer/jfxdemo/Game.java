@@ -9,6 +9,7 @@ import javafx.animation.Animation;
 import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Label;
@@ -47,7 +48,7 @@ public final class Game {
         this.prevCell = null;
         this.random = new Random();
         // Bind score label text to score property
-        this.scoreLabel.textProperty().bind(score.asString());
+        this.scoreLabel.textProperty().bind(Bindings.format("Score: %d", score));
         
         // Set up the timeline for mole spawning
         KeyFrame kf = createKeyFrame();
