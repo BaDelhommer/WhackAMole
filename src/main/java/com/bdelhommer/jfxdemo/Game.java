@@ -68,6 +68,8 @@ public final class Game {
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {                
                 Cell cell = new Cell(width, height);
+                cell.getContainer().prefWidthProperty().bind(root.widthProperty().divide(3));
+                cell.getContainer().prefHeightProperty().bind(root.heightProperty().divide(4));
                 this.board[row][col] = cell;
                 
                 // Attach click handler to each cell's button
