@@ -7,6 +7,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Author     : Brant
 */
 
+.root {
+    -fx-background-image: url("/grass.png");
+    -fx-background-repeat: repeat;
+    -fx-background-size: auto;
+}
+
 #scoreLabel {    
     -fx-font-size: 20px;
     -fx-text-fill: yellow;
