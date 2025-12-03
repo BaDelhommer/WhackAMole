@@ -26,7 +26,7 @@ public class App extends Application {
         root.setStyle("-fx-background-color: lightgreen;");
                 
         // Create the scene with dimensions and apply CSS stylesheet
-        Scene scene = new Scene(root, 300, 400);
+        Scene scene = new Scene(root, 400, 450);
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         
         // Calculate cell dimensions based on scene size

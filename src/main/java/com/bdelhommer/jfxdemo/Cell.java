@@ -41,7 +41,7 @@ public class Cell {
         
         // Create mole image view (initially hidden)
         this.moleView = new ImageView(this.mole);
-        imageViewSetup(this.moleView, width, height);
+        imageViewSetup(this.moleView, container);
         this.moleView.setVisible(false);        
         
         // Add components to container and center them
@@ -54,10 +54,10 @@ public class Cell {
         
     }
     
-    private void imageViewSetup(ImageView iv, double width, double height) {
+    private void imageViewSetup(ImageView iv, VBox container) {
         
-        iv.setFitWidth(width * 0.8);
-        iv.setFitHeight(height * 0.8);
+        iv.fitWidthProperty().bind(container.widthProperty().multiply(0.7));
+        iv.fitHeightProperty().bind(container.heightProperty().multiply(0.7));
         iv.setPreserveRatio(true);
         
     }
