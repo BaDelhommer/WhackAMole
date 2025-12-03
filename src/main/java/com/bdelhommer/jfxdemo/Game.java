@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.bdelhommer.jfxdemo;
 
 import java.util.Random;
@@ -24,7 +20,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
- *
+ * Main game logic class for Whack-A-Mole.
+ * Manages the game board, scoring, mole spawning, and game state transitions.
+ * 
  * @author Brant
  */
 public final class Game {
@@ -202,6 +200,10 @@ public final class Game {
         
     }
     
+    /**
+     * Creates the start menu overlay with a title and start button
+     * @param root The root StackPane to add the menu to
+     */
     public void createStartMenu(StackPane root) {
         
         this.startMenu = new VBox(10);
@@ -218,6 +220,10 @@ public final class Game {
         
     }
     
+    /**
+     * Creates the game over menu overlay with restart and quit options
+     * @param root The root StackPane to add the menu to
+     */
     public void createGameOverMenu(StackPane root) {
         
         this.gameOverMenu = new VBox(10);
@@ -236,6 +242,9 @@ public final class Game {
         
     }
     
+    /**
+     * Transitions from the start menu to active gameplay
+     */
     public void startPlaying() {
         
         this.startMenu.setVisible(false);
@@ -244,6 +253,9 @@ public final class Game {
         
     }
     
+    /**
+     * Ends the current game session and displays the game over menu
+     */
     private void endGame() {
         
         this.spawnTimeLine.stop();
@@ -252,6 +264,9 @@ public final class Game {
         
     }
     
+    /**
+     * Resets the game state and starts a new game session
+     */
     private void restartGame() {
         
         this.misses = 0;

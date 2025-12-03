@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.bdelhommer.jfxdemo;
 
 import javafx.geometry.Pos;
@@ -11,7 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- *
+ * Represents a single cell in the Whack-A-Mole game grid.
+ * Contains the visual components (mole image, whack button) and active state.
+ * 
  * @author Brant
  */
 public class Cell {
@@ -54,6 +52,11 @@ public class Cell {
         
     }
     
+    /**
+     * Configures an ImageView to scale responsively within its container
+     * @param iv The ImageView to configure
+     * @param container The parent container for size binding
+     */
     private void imageViewSetup(ImageView iv, VBox container) {
         
         iv.fitWidthProperty().bind(container.widthProperty().multiply(0.6));
@@ -77,10 +80,12 @@ public class Cell {
      */
     public void setActive(boolean a) { this.active = a; }
     
+    /** @return The default mole image */
     public Image getMoleImg() {
         return this.mole;
     }
     
+    /** @return The hit animation image */
     public Image getHitImg() {
         return this.hitImg;
     }

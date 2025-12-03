@@ -44,9 +44,6 @@ public class App extends Application {
         game.createGameOverMenu(root);
         
         boardPane.setVisible(false);
-
-        // Start the game loop
-//        game.startGame();
         
         // Configure and display the stage
         stage.setScene(scene);
