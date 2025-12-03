@@ -10,12 +10,18 @@ import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -38,6 +44,17 @@ public final class Game {
     // Current point total
     private int points;
     
+    private int misses;
+    private final int maxMisses = 5;
+    private final IntegerProperty missProp = new SimpleIntegerProperty();
+    private final Label missLabel = new Label();
+    
+    private HBox labelContainer;
+    
+    private VBox startMenu;
+    private VBox gameOverMenu;
+    private GridPane boardPane;
+    
     /**
      * Constructs a new Game instance and initializes game components
      */
@@ -46,15 +63,20 @@ public final class Game {
         // Initialize 3x3 board
         this.board = new Cell[3][3];
         this.points = 0;
+        this.misses = 0;
         this.score.set(points);
+        this.missProp.set(misses);
         this.prevCell = null;
         this.random = new Random();
         // Bind score label text to score property
         this.scoreLabel.textProperty().bind(Bindings.format("Score: %d", score));
+        this.missLabel.textProperty().bind(Bindings.format("Misses: %d", missProp));
         
         // Set up the timeline for mole spawning
         KeyFrame kf = createKeyFrame();
         this.spawnTimeLine = new Timeline(kf);
+        
+        this.misses = 0;
         
     }
     
@@ -64,28 +86,34 @@ public final class Game {
      * @param width The width of each cell
      * @param height The height of each cell
      */
-    public void createView(GridPane root, double width, double height) {
+    public void createView(GridPane boardPane, double width, double height) {
 
         // Create and position cells in a 3x3 grid
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {                
                 Cell cell = new Cell(width, height);
-                cell.getContainer().prefWidthProperty().bind(root.widthProperty().divide(3));
-                cell.getContainer().prefHeightProperty().bind(root.heightProperty().divide(4));
+                cell.getContainer().prefWidthProperty().bind(boardPane.widthProperty().divide(3));
+                cell.getContainer().prefHeightProperty().bind(boardPane.heightProperty().divide(4));
                 this.board[row][col] = cell;
                 
                 // Attach click handler to each cell's button
                 cell.getButton().setOnMousePressed(event -> handleClicks(cell));
                 
-                root.add(cell.getContainer(), col, row);
+                boardPane.add(cell.getContainer(), col, row);
             }
         }
         
         // Add and position the score label
+        this.labelContainer = new HBox(10);
         this.scoreLabel.setId("scoreLabel");
-        this.scoreLabel.setTranslateY(50);
-        root.add(this.scoreLabel, 0, 400);
-        root.setPadding(new Insets(10, 10, 0, 10));
+        this.missLabel.setId("missLabel");
+        this.labelContainer.getChildren().addAll(this.scoreLabel, this.missLabel);
+        this.labelContainer.setPadding(new Insets(5));
+        this.labelContainer.setTranslateY(50);
+        this.boardPane = boardPane;
+        this.boardPane.add(this.labelContainer, 0, 3, 3, 1);
+        this.boardPane.setPadding(new Insets(10, 10, 0, 10));
+        this.boardPane.setVisible(true);
     }
     
     /**
@@ -107,6 +135,12 @@ public final class Game {
             ft.setAutoReverse(true);
             ft.setCycleCount(2);
             ft.play();
+        } else {
+            this.misses++;
+            this.missProp.set(this.misses);
+            if (this.misses >= this.maxMisses) {
+                endGame();
+            }
         }
         
     }
@@ -168,4 +202,65 @@ public final class Game {
         
     }
     
+    public void createStartMenu(StackPane root) {
+        
+        this.startMenu = new VBox(10);
+        this.startMenu.setAlignment(Pos.CENTER);
+        this.startMenu.setId("startMenu");
+        
+        Label title = new Label("Whack-A-Mole");
+        Button startButton = new Button("Start");
+        startButton.setOnAction(e -> startPlaying());
+        
+        this.startMenu.getChildren().addAll(title, startButton);
+        root.getChildren().add(startMenu);
+        this.startMenu.setVisible(true);
+        
+    }
+    
+    public void createGameOverMenu(StackPane root) {
+        
+        this.gameOverMenu = new VBox(10);
+        this.gameOverMenu.setAlignment(Pos.CENTER);
+        
+        Label gameOverLabel = new Label("Game Over!");
+        Button restartButton = new Button("Restart");
+        restartButton.setOnAction(e -> restartGame());
+        
+        Button quitButton = new Button("Quit?");
+        quitButton.setOnAction(e -> Platform.exit());
+        
+        this.gameOverMenu.getChildren().addAll(gameOverLabel, restartButton, quitButton);
+        this.gameOverMenu.setVisible(false);
+        root.getChildren().add(gameOverMenu);
+        
+    }
+    
+    public void startPlaying() {
+        
+        this.startMenu.setVisible(false);
+        this.boardPane.setVisible(true);
+        startGame();
+        
+    }
+    
+    private void endGame() {
+        
+        this.spawnTimeLine.stop();
+        this.boardPane.setVisible(false);
+        this.gameOverMenu.setVisible(true);
+        
+    }
+    
+    private void restartGame() {
+        
+        this.misses = 0;
+        this.points = 0;
+        this.score.set(this.points);
+        this.missProp.set(this.misses);
+        this.gameOverMenu.setVisible(false);
+        this.boardPane.setVisible(true);
+        startPlaying();
+        
+    }
 }

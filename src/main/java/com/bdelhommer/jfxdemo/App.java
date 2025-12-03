@@ -3,6 +3,7 @@ package com.bdelhommer.jfxdemo;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -21,23 +22,31 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         
-        // Create the root layout as a GridPane
-        GridPane root = new GridPane();
-        root.setStyle("-fx-background-color: lightgreen;");
+        // Create the root layout as a Stack Pane
+        StackPane root = new StackPane();
+        GridPane boardPane = new GridPane();
+        boardPane.setId("boardPane");
+        
+        root.getChildren().add(boardPane);
                 
         // Create the scene with dimensions and apply CSS stylesheet
-        Scene scene = new Scene(root, 400, 450);
+        Scene scene = new Scene(root, 360, 480);
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         
         // Calculate cell dimensions based on scene size
-        double cellWidth = scene.getWidth() / 4;
-        double cellHeight = scene.getHeight() / 4;
+        double cellWidth = scene.getWidth() / 3.0;
+        double cellHeight = scene.getHeight() / 4.0;
 
         // Initialize the game board view
-        game.createView(root, cellWidth, cellHeight);
+        game.createView(boardPane, cellWidth, cellHeight);
+        
+        game.createStartMenu(root);
+        game.createGameOverMenu(root);
+        
+        boardPane.setVisible(false);
 
         // Start the game loop
-        game.startGame();
+//        game.startGame();
         
         // Configure and display the stage
         stage.setScene(scene);
