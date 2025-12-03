@@ -56,8 +56,8 @@ public class Cell {
     
     private void imageViewSetup(ImageView iv, VBox container) {
         
-        iv.fitWidthProperty().bind(container.widthProperty().multiply(0.7));
-        iv.fitHeightProperty().bind(container.heightProperty().multiply(0.7));
+        iv.fitWidthProperty().bind(container.widthProperty().multiply(0.6));
+        iv.fitHeightProperty().bind(container.heightProperty().multiply(0.6));
         iv.setPreserveRatio(true);
         
     }

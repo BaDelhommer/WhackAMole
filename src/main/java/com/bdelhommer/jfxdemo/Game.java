@@ -6,6 +6,7 @@ package com.bdelhommer.jfxdemo;
 
 import java.util.Random;
 import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -73,7 +74,7 @@ public final class Game {
                 this.board[row][col] = cell;
                 
                 // Attach click handler to each cell's button
-                cell.getButton().setOnAction(event -> handleClicks(cell));
+                cell.getButton().setOnMousePressed(event -> handleClicks(cell));
                 
                 root.add(cell.getContainer(), col, row);
             }
@@ -97,6 +98,13 @@ public final class Game {
             increment(c);
             c.getMoleView().setImage(c.getHitImg());
             c.setActive(false);
+            
+            FadeTransition ft = new FadeTransition(Duration.millis(100), c.getContainer());
+            ft.setFromValue(1.0);
+            ft.setToValue(0.7);
+            ft.setAutoReverse(true);
+            ft.setCycleCount(2);
+            ft.play();
         }
         
     }
