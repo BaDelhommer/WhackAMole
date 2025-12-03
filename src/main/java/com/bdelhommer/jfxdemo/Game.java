@@ -13,6 +13,7 @@ import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
@@ -84,6 +85,7 @@ public final class Game {
         this.scoreLabel.setId("scoreLabel");
         this.scoreLabel.setTranslateY(50);
         root.add(this.scoreLabel, 0, 400);
+        root.setPadding(new Insets(10, 10, 0, 10));
     }
     
     /**
