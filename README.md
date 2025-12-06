@@ -45,6 +45,7 @@ src/main/java/com/bdelhommer/jfxdemo/
 
 src/main/resources/
 ├── styles.css  - CSS styling
+├── grass.png   - Background image
 ├── mole.png    - Mole image
 └── hit.png     - Hit animation image
 ```
