@@ -16,7 +16,7 @@ public class Cell {
     
     private final VBox container;
     private final Button button;
-    private boolean active;
+    private boolean active; // flag for the cell that contains the mole
     private final Image mole = new Image(getClass().getResourceAsStream("/mole.png"));
     private final Image hitImg = new Image(getClass().getResourceAsStream("/hit.png"));
     private final ImageView moleView;

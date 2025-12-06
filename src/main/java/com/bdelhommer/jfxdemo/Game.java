@@ -30,8 +30,8 @@ public final class Game {
     private final Cell[][] board;
     private final IntegerProperty score = new SimpleIntegerProperty();
     private final Timeline spawnTimeLine;
-    private Cell prevCell;
-    private final Random random;
+    private Cell prevCell; // reference to previously active cell
+    private final Random random; // for picking random mole location
     private final Label scoreLabel = new Label();
     private int points;
     
@@ -40,7 +40,7 @@ public final class Game {
     private final IntegerProperty missProp = new SimpleIntegerProperty();
     private final Label missLabel = new Label();
     
-    private HBox labelContainer;
+    private HBox labelContainer; // container for score and miss labels
     private VBox startMenu;
     private VBox gameOverMenu;
     private GridPane boardPane;
@@ -97,7 +97,7 @@ public final class Game {
             c.getMoleView().setImage(c.getHitImg());
             c.setActive(false);
             
-            FadeTransition ft = new FadeTransition(Duration.millis(100), c.getContainer());
+            FadeTransition ft = new FadeTransition(Duration.millis(100), c.getContainer()); // flash on cell on successful hit
             ft.setFromValue(1.0);
             ft.setToValue(0.7);
             ft.setAutoReverse(true);
@@ -127,7 +127,7 @@ public final class Game {
             int row = this.random.nextInt(3);
             int col = this.random.nextInt(3);
             
-            while (this.board[row][col] == this.prevCell) {
+            while (this.board[row][col] == this.prevCell) { // ensure the mole is spawned in a new cell
                 row = this.random.nextInt(3);
                 col = this.random.nextInt(3);
             }
